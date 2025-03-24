@@ -12,30 +12,9 @@ import axios from "axios";
 
 const RecipesList = () => {
   const { items, loading, error } = useAppSelector((state) => state.recipes);
-  const [categories, setCategories] = useState<string[]>([]);
+  const { items: categories } = useAppSelector((state) => state.categories);
   const [selectedCategory, setSelectedCategory] = useState<string>("");
   const [filteredItems, setFilteredItems] = useState(items);
-
-  // Fetch categories when component mounts
-  useEffect(() => {
-    const fetchCategories = async () => {
-      try {
-        const response = await axios.get(
-          "https://www.themealdb.com/api/json/v1/1/list.php?c=list"
-        );
-        if (response.data && response.data.meals) {
-          const categoryList = response.data.meals.map(
-            (cat: { strCategory: string }) => cat.strCategory
-          );
-          setCategories(categoryList);
-        }
-      } catch (error) {
-        console.error("Error fetching categories:", error);
-      }
-    };
-
-    fetchCategories();
-  }, []);
 
   // Filter recipes when category changes
   useEffect(() => {
@@ -69,7 +48,6 @@ const RecipesList = () => {
   }
 
   return (
-    // <div className="w-full min-h-screen">
     <div className="min-w-screen min-h-screen">
       <div className="mb-6 max-w-xs">
         <Select onValueChange={setSelectedCategory} value={selectedCategory}>
