@@ -14,6 +14,7 @@ import { useEffect, useState } from "react";
 import { RecipeCardProps } from "@/types";
 import { DefaultRecipe } from "@/constants";
 import RecipeCardError from "@/error/recipeCardError";
+import clsx from "clsx";
 
 const RecipeCard = ({ recipeId, isCardinRecipesList }: RecipeCardProps) => {
   const [recipe, setRecipe] = useState(DefaultRecipe);
@@ -83,12 +84,17 @@ const RecipeCard = ({ recipeId, isCardinRecipesList }: RecipeCardProps) => {
   }
 
   return (
-    <div className="container mx-auto p-4">
-      <Card className="max-w-2xl mx-auto min-w-xs">
+    <div className="">
+      {/* <Card className="max-w-2xl mx-auto min-w-xs"> */}
+      <Card
+        className={clsx("max-w-2xl mx-auto min-w-xs", {
+          "max-w-xs": isCardinRecipesList,
+        })}
+      >
         <CardHeader>
           <div className="flex items-center justify-between">
             <div>
-              <CardTitle className="text-2xl">{meal.strMeal}</CardTitle>
+              <CardTitle className="text-xl p-1">{meal.strMeal}</CardTitle>
               <CardDescription className="flex gap-2 items-center mt-1">
                 <ChefHat size={16} />
                 <span>

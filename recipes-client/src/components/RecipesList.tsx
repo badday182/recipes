@@ -13,13 +13,15 @@ const RecipesList = () => {
   }
 
   return (
-    <div className="recipes-container grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-5">
+    <div className="recipes-container flex flex-wrap justify-evenly gap-3">
       {items.map((recipe) => (
-        <RecipeCard
-          key={recipe.idMeal}
-          recipeId={recipe.idMeal}
-          isCardinRecipesList={true}
-        />
+        <div className="h-full">
+          <RecipeCard
+            key={recipe.idMeal}
+            recipeId={recipe.idMeal}
+            isCardinRecipesList={true}
+          />
+        </div>
       ))}
     </div>
   );
