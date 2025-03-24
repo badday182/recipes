@@ -1,4 +1,9 @@
-import { initialRecipesState, Recipe } from "@/types";
+import {
+  Category,
+  initialCategoriesState,
+  initialRecipesState,
+  Recipe,
+} from "@/types";
 import { createSlice, createAsyncThunk, PayloadAction } from "@reduxjs/toolkit";
 import axios from "axios";
 
@@ -91,23 +96,6 @@ const recipesSlice = createSlice({
       });
   },
 });
-
-// Category interface and state
-interface Category {
-  strCategory: string;
-}
-
-interface CategoriesState {
-  items: string[];
-  loading: "idle" | "pending" | "succeeded" | "failed";
-  error: string | null;
-}
-
-const initialCategoriesState: CategoriesState = {
-  items: [],
-  loading: "idle",
-  error: null,
-};
 
 // Fetch Categories
 export const fetchCategories = createAsyncThunk(

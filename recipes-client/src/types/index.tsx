@@ -21,3 +21,19 @@ export const initialRecipesState: RecipesState = {
   loading: "idle",
   error: null,
 };
+
+export interface Category {
+  strCategory: string;
+}
+
+export interface CategoriesState {
+  items: string[];
+  loading: "idle" | "pending" | "succeeded" | "failed";
+  error: string | null;
+}
+
+export const initialCategoriesState: CategoriesState = {
+  items: [],
+  loading: "idle",
+  error: null,
+};

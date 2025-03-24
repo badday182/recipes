@@ -84,12 +84,12 @@ const RecipesList = () => {
 
       // Determine range to show based on current page
       let startPage = Math.max(2, currentPage - 2);
-      let endPage = Math.min(startPage + 4, totalPages - 1);
+      let endPage = Math.min(startPage + 5, totalPages - 1);
 
       // Adjust if we're near the end
       if (endPage >= totalPages - 2) {
         endPage = totalPages - 1;
-        startPage = Math.max(2, endPage - 4);
+        startPage = Math.max(2, endPage - 5);
       }
 
       // Show ellipsis before startPage if needed
@@ -151,8 +151,8 @@ const RecipesList = () => {
   }
 
   return (
-    <div className="container min-h-screen">
-      <div className="mb-6 max-w-xs">
+    <>
+      <div className="mb-6 min-w-screen">
         <Select onValueChange={setSelectedCategory} value={selectedCategory}>
           <SelectTrigger>
             <SelectValue placeholder="Filter by category" />
@@ -167,51 +167,52 @@ const RecipesList = () => {
           </SelectContent>
         </Select>
       </div>
-
-      <div className="recipes-container flex flex-wrap justify-evenly gap-3">
-        {currentItems.map((recipe) => (
-          <div className="h-full" key={recipe.idMeal}>
-            <RecipeCard recipeId={recipe.idMeal} isCardinRecipesList={true} />
-          </div>
-        ))}
-      </div>
-
-      {totalPages > 1 && (
-        <div className="mt-8">
-          <Pagination>
-            <PaginationContent>
-              <PaginationItem>
-                <PaginationPrevious
-                  onClick={() =>
-                    setCurrentPage((prev) => Math.max(prev - 1, 1))
-                  }
-                  aria-disabled={currentPage === 1}
-                  className={
-                    currentPage === 1 ? "pointer-events-none opacity-50" : ""
-                  }
-                />
-              </PaginationItem>
-
-              {renderPaginationItems()}
-
-              <PaginationItem>
-                <PaginationNext
-                  onClick={() =>
-                    setCurrentPage((prev) => Math.min(prev + 1, totalPages))
-                  }
-                  aria-disabled={currentPage === totalPages}
-                  className={
-                    currentPage === totalPages
-                      ? "pointer-events-none opacity-50"
-                      : ""
-                  }
-                />
-              </PaginationItem>
-            </PaginationContent>
-          </Pagination>
+      <div className="container min-h-screen">
+        <div className="recipes-container flex flex-wrap justify-evenly gap-3">
+          {currentItems.map((recipe) => (
+            <div className="h-full" key={recipe.idMeal}>
+              <RecipeCard recipeId={recipe.idMeal} isCardinRecipesList={true} />
+            </div>
+          ))}
         </div>
-      )}
-    </div>
+
+        {totalPages > 1 && (
+          <div className="mt-8">
+            <Pagination>
+              <PaginationContent>
+                <PaginationItem>
+                  <PaginationPrevious
+                    onClick={() =>
+                      setCurrentPage((prev) => Math.max(prev - 1, 1))
+                    }
+                    aria-disabled={currentPage === 1}
+                    className={
+                      currentPage === 1 ? "pointer-events-none opacity-50" : ""
+                    }
+                  />
+                </PaginationItem>
+
+                {renderPaginationItems()}
+
+                <PaginationItem>
+                  <PaginationNext
+                    onClick={() =>
+                      setCurrentPage((prev) => Math.min(prev + 1, totalPages))
+                    }
+                    aria-disabled={currentPage === totalPages}
+                    className={
+                      currentPage === totalPages
+                        ? "pointer-events-none opacity-50"
+                        : ""
+                    }
+                  />
+                </PaginationItem>
+              </PaginationContent>
+            </Pagination>
+          </div>
+        )}
+      </div>
+    </>
   );
 };
 
