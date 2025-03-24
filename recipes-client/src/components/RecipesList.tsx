@@ -17,7 +17,10 @@ import {
   PaginationNext,
   PaginationPrevious,
 } from "@/components/ui/pagination";
-import { fetchRecipesByCategory } from "@/store/slices/recipesSlice";
+import {
+  fetchRecipes,
+  fetchRecipesByCategory,
+} from "@/store/slices/recipesSlice";
 
 const ITEMS_PER_PAGE = 12;
 
@@ -40,6 +43,8 @@ const RecipesList = () => {
   useEffect(() => {
     if (selectedCategory && selectedCategory !== "All categories") {
       dispatch(fetchRecipesByCategory(selectedCategory));
+    } else {
+      dispatch(fetchRecipes());
     }
     setCurrentPage(1); // Reset to first page when category changes
   }, [selectedCategory, dispatch]);
