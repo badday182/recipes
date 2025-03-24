@@ -37,3 +37,9 @@ export const initialCategoriesState: CategoriesState = {
   loading: "idle",
   error: null,
 };
+
+export interface PaginationControlProps {
+  currentPage: number;
+  totalPages: number;
+  onPageChange: (page: number) => void;
+}
