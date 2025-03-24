@@ -164,9 +164,9 @@ const RecipeCard = ({
           </CardContent>
 
           <CardFooter className="flex justify-between">
-            <div className="text-sm text-muted-foreground">
+            {/* <div className="text-sm text-muted-foreground">
               ID: {meal.idMeal}
-            </div>
+            </div> */}
             {meal.strYoutube && (
               <Button variant="outline" size="sm" asChild>
                 <a
