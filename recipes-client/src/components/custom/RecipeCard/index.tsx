@@ -84,94 +84,91 @@ const RecipeCard = ({ recipeId, isCardinRecipesList }: RecipeCardProps) => {
   }
 
   return (
-    <div className="">
-      {/* <Card className="max-w-2xl mx-auto min-w-xs"> */}
-      <Card
-        className={clsx("max-w-2xl mx-auto min-w-xs", {
-          "max-w-xs": isCardinRecipesList,
-        })}
-      >
-        <CardHeader>
-          <div className="flex items-center justify-between">
-            <div>
-              <CardTitle className="text-xl p-1">{meal.strMeal}</CardTitle>
-              <CardDescription className="flex gap-2 items-center mt-1">
-                <ChefHat size={16} />
-                <span>
-                  {meal.strArea} • {meal.strCategory}
-                </span>
-              </CardDescription>
-            </div>
-            {meal.strMealThumb && (
-              <img
-                src={meal.strMealThumb}
-                alt={meal.strMeal || "Recipe image"}
-                className="w-24 h-24 rounded-md object-cover"
-              />
-            )}
+    <Card
+      className={clsx("max-w-2xl mx-auto min-w-xs", {
+        "max-w-xs": isCardinRecipesList,
+      })}
+    >
+      <CardHeader>
+        <div className="flex items-center justify-between">
+          <div>
+            <CardTitle className="text-xl p-1">{meal.strMeal}</CardTitle>
+            <CardDescription className="flex gap-2 items-center mt-1">
+              <ChefHat size={16} />
+              <span>
+                {meal.strArea} • {meal.strCategory}
+              </span>
+            </CardDescription>
           </div>
-          <div className="flex flex-wrap gap-2 mt-2">
-            {meal.strTags?.split(",").map((tag) => (
-              <Badge key={tag} variant="secondary">
-                {tag}
-              </Badge>
-            ))}
-          </div>
-        </CardHeader>
-        {!isCardinRecipesList && (
-          <>
-            <CardContent>
-              {loading ? (
-                <div className="flex justify-center py-8">
-                  <div className="animate-pulse text-center">
-                    <p>Loading recipe details...</p>
-                  </div>
+          {meal.strMealThumb && (
+            <img
+              src={meal.strMealThumb}
+              alt={meal.strMeal || "Recipe image"}
+              className="w-24 h-24 rounded-md object-cover"
+            />
+          )}
+        </div>
+        <div className="flex flex-wrap gap-2 mt-2">
+          {meal.strTags?.split(",").map((tag) => (
+            <Badge key={tag} variant="secondary">
+              {tag}
+            </Badge>
+          ))}
+        </div>
+      </CardHeader>
+      {!isCardinRecipesList && (
+        <>
+          <CardContent>
+            {loading ? (
+              <div className="flex justify-center py-8">
+                <div className="animate-pulse text-center">
+                  <p>Loading recipe details...</p>
                 </div>
-              ) : (
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                  <div>
-                    <h3 className="text-lg font-medium mb-2">Ingredients</h3>
-                    <ul className="list-disc pl-5 space-y-1">
-                      {ingredients.map((item, idx) => (
-                        <li key={idx}>
-                          {item.measure} {item.name}
-                        </li>
-                      ))}
-                    </ul>
-                  </div>
-
-                  <div>
-                    <h3 className="text-lg font-medium mb-2">Instructions</h3>
-                    <ScrollArea className="h-50 rounded-md border p-2">
-                      <p className="text-sm">{meal.strInstructions}</p>
-                    </ScrollArea>
-                  </div>
-                </div>
-              )}
-            </CardContent>
-
-            <CardFooter className="flex justify-between">
-              <div className="text-sm text-muted-foreground">
-                ID: {meal.idMeal}
               </div>
-              {meal.strYoutube && (
-                <Button variant="outline" size="sm" asChild>
-                  <a
-                    href={meal.strYoutube}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="flex items-center gap-1"
-                  >
-                    <ExternalLink size={14} />
-                    Watch Video
-                  </a>
-                </Button>
-              )}
-            </CardFooter>
-          </>
-        )}
-      </Card>
-    </div>
+            ) : (
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div>
+                  <h3 className="text-lg font-medium mb-2">Ingredients</h3>
+                  <ul className="list-disc pl-5 space-y-1">
+                    {ingredients.map((item, idx) => (
+                      <li key={idx}>
+                        {item.measure} {item.name}
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+
+                <div>
+                  <h3 className="text-lg font-medium mb-2">Instructions</h3>
+                  <ScrollArea className="h-50 rounded-md border p-2">
+                    <p className="text-sm">{meal.strInstructions}</p>
+                  </ScrollArea>
+                </div>
+              </div>
+            )}
+          </CardContent>
+
+          <CardFooter className="flex justify-between">
+            <div className="text-sm text-muted-foreground">
+              ID: {meal.idMeal}
+            </div>
+            {meal.strYoutube && (
+              <Button variant="outline" size="sm" asChild>
+                <a
+                  href={meal.strYoutube}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex items-center gap-1"
+                >
+                  <ExternalLink size={14} />
+                  Watch Video
+                </a>
+              </Button>
+            )}
+          </CardFooter>
+        </>
+      )}
+    </Card>
   );
 };
 
