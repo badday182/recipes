@@ -1,16 +1,4 @@
 import "./App.css";
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardFooter,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
-import { ScrollArea } from "@/components/ui/scroll-area";
-import { Button } from "@/components/ui/button";
-import { ExternalLink, ChefHat } from "lucide-react";
 import RecipeCard from "./components/custom/RecipeCard";
 
 function App() {
@@ -96,7 +84,7 @@ function App() {
 
   return (
     // <RecipeCard meals={recipe.meals} />
-    <RecipeCard id={52772} />
+    <RecipeCard recipeId={52772} />
     // <div className="container mx-auto p-4">
     //   <Card className="max-w-2xl mx-auto min-w-xs">
     //     <CardHeader>
