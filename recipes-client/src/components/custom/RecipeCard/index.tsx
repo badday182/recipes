@@ -11,28 +11,9 @@ import { ScrollArea } from "@/components/ui/scroll-area";
 import { Button } from "@/components/ui/button";
 import { ExternalLink, ChefHat } from "lucide-react";
 import { useEffect, useState } from "react";
-
-// Default recipe for loading state or fallback
-const DefaultRecipe = {
-  meals: [
-    {
-      idMeal: "Loading...",
-      strMeal: "Loading recipe...",
-      strMealAlternate: null,
-      strCategory: "...",
-      strArea: "...",
-      strInstructions: "Loading instructions...",
-      strMealThumb: "",
-      strTags: "",
-      strYoutube: "",
-      // ... other fields with default values
-    },
-  ],
-};
-
-interface RecipeCardProps {
-  recipeId: string;
-}
+import { RecipeCardProps } from "@/types";
+import { DefaultRecipe } from "@/constants";
+import RecipeCardError from "@/error/recipeCardError";
 
 const RecipeCard = ({ recipeId }: RecipeCardProps) => {
   const [recipe, setRecipe] = useState(DefaultRecipe);
@@ -79,23 +60,7 @@ const RecipeCard = ({ recipeId }: RecipeCardProps) => {
 
   // Handle error state
   if (error) {
-    return (
-      <div className="container mx-auto p-4">
-        <Card className="max-w-2xl mx-auto min-w-xs">
-          <CardHeader>
-            <CardTitle className="text-2xl text-red-500">
-              Error Loading Recipe
-            </CardTitle>
-          </CardHeader>
-          <CardContent>
-            <p>{error}</p>
-          </CardContent>
-          <CardFooter>
-            <Button onClick={() => window.location.reload()}>Try Again</Button>
-          </CardFooter>
-        </Card>
-      </div>
-    );
+    return <RecipeCardError />;
   }
 
   const meal =
