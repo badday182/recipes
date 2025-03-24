@@ -1,41 +1,41 @@
+import { initialRecipesState, Recipe } from "@/types";
 import { createSlice, createAsyncThunk, PayloadAction } from "@reduxjs/toolkit";
 import axios from "axios";
-
-// Recipe interface and state
-export interface Recipe {
-  idMeal: string;
-  strMeal: string;
-  strCategory: string;
-  strMealThumb: string;
-}
-
-interface RecipesState {
-  items: Recipe[];
-  loading: "idle" | "pending" | "succeeded" | "failed";
-  error: string | null;
-}
-
-const initialRecipesState: RecipesState = {
-  items: [],
-  loading: "idle",
-  error: null,
-};
 
 // Fetch Recipes
 export const fetchRecipes = createAsyncThunk(
   "recipes/fetchRecipes",
   async () => {
-    const categoriesResponse = await fetch(
-      "https://www.themealdb.com/api/json/v1/1/categories.php"
-    );
-    const categoriesData = await categoriesResponse.json();
-    const firstCategory = categoriesData.categories[0].strCategory;
-    const response = await fetch(
-      `https://www.themealdb.com/api/json/v1/1/filter.php?c=${firstCategory}`
-    );
-    const data = await response.json();
-    // return data.meals.slice(0, 20);
-    return data.meals;
+    try {
+      // Get all categories first
+      const categoriesResponse = await fetch(
+        "https://www.themealdb.com/api/json/v1/1/categories.php"
+      );
+      const categoriesData = await categoriesResponse.json();
+      const categories = categoriesData.categories.map(
+        (cat: any) => cat.strCategory
+      );
+
+      // Fetch recipes from all categories
+      const promises = categories.map(async (category: string) => {
+        const response = await fetch(
+          `https://www.themealdb.com/api/json/v1/1/filter.php?c=${category}`
+        );
+        const data = await response.json();
+        return data.meals || [];
+      });
+
+      // Wait for all requests to complete
+      const allCategoriesResults = await Promise.all(promises);
+
+      // Combine all recipes into a single array
+      const allRecipes = allCategoriesResults.flat();
+
+      return allRecipes;
+    } catch (error) {
+      console.error("Error fetching all recipes:", error);
+      throw error;
+    }
   }
 );
 
