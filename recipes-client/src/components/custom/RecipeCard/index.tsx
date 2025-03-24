@@ -66,7 +66,7 @@ const RecipeCard = ({
 
   // Handle error state
   if (error) {
-    return <RecipeCardError />;
+    return <RecipeCardError error={"An unknown error occurred"} />;
   }
 
   const meal =
