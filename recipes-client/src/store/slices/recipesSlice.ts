@@ -34,7 +34,22 @@ export const fetchRecipes = createAsyncThunk(
       `https://www.themealdb.com/api/json/v1/1/filter.php?c=${firstCategory}`
     );
     const data = await response.json();
-    return data.meals.slice(0, 20);
+    // return data.meals.slice(0, 20);
+    return data.meals;
+  }
+);
+
+// Fetch Recipes by Category
+export const fetchRecipesByCategory = createAsyncThunk(
+  "recipes/fetchRecipesByCategory",
+  async (category: string) => {
+    const response = await axios.get(
+      `https://www.themealdb.com/api/json/v1/1/filter.php?c=${category}`
+    );
+    if (response.data && response.data.meals) {
+      return response.data.meals;
+    }
+    return [];
   }
 );
 
@@ -57,6 +72,22 @@ const recipesSlice = createSlice({
       .addCase(fetchRecipes.rejected, (state, action) => {
         state.loading = "failed";
         state.error = action.error.message || "Something went wrong";
+      })
+      // Add the new cases for fetchRecipesByCategory
+      .addCase(fetchRecipesByCategory.pending, (state) => {
+        state.loading = "pending";
+      })
+      .addCase(
+        fetchRecipesByCategory.fulfilled,
+        (state, action: PayloadAction<Recipe[]>) => {
+          state.loading = "succeeded";
+          state.items = action.payload;
+        }
+      )
+      .addCase(fetchRecipesByCategory.rejected, (state, action) => {
+        state.loading = "failed";
+        state.error =
+          action.error.message || "Failed to fetch recipes by category";
       });
   },
 });
