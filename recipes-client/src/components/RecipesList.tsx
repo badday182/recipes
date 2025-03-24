@@ -83,7 +83,6 @@ const RecipesList = () => {
 
   return (
     <>
-      {/* <div className="mb-6 space-y-4"> */}
       <div className="mb-6 min-w-screen flex gap-2">
         <Select onValueChange={setSelectedCategory} value={selectedCategory}>
           <SelectTrigger>
