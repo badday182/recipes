@@ -15,12 +15,8 @@ const RecipesList = () => {
   return (
     <div className="recipes-container flex flex-wrap justify-evenly gap-3">
       {items.map((recipe) => (
-        <div className="h-full">
-          <RecipeCard
-            key={recipe.idMeal}
-            recipeId={recipe.idMeal}
-            isCardinRecipesList={true}
-          />
+        <div className="h-full" key={recipe.idMeal}>
+          <RecipeCard recipeId={recipe.idMeal} isCardinRecipesList={true} />
         </div>
       ))}
     </div>

@@ -15,8 +15,13 @@ import { RecipeCardProps } from "@/types";
 import { DefaultRecipe } from "@/constants";
 import RecipeCardError from "@/error/recipeCardError";
 import clsx from "clsx";
+import { useNavigate } from "react-router-dom";
 
-const RecipeCard = ({ recipeId, isCardinRecipesList }: RecipeCardProps) => {
+const RecipeCard = ({
+  recipeId,
+  isCardinRecipesList = false,
+}: RecipeCardProps) => {
+  const navigate = useNavigate();
   const [recipe, setRecipe] = useState(DefaultRecipe);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
@@ -83,11 +88,21 @@ const RecipeCard = ({ recipeId, isCardinRecipesList }: RecipeCardProps) => {
     }
   }
 
-  return (
+  // Add this function to handle card click
+  const handleCardClick = () => {
+    if (isCardinRecipesList) {
+      navigate(`/recipe/${recipeId}`);
+    }
+  };
+
+  // Wrap the Card with onClick when it's in recipe list
+  const CardComponent = (
     <Card
       className={clsx("max-w-2xl mx-auto min-w-xs", {
         "max-w-xs": isCardinRecipesList,
+        "cursor-pointer hover:shadow-md transition-shadow": isCardinRecipesList,
       })}
+      onClick={isCardinRecipesList ? handleCardClick : undefined}
     >
       <CardHeader>
         <div className="flex items-center justify-between">
@@ -170,6 +185,8 @@ const RecipeCard = ({ recipeId, isCardinRecipesList }: RecipeCardProps) => {
       )}
     </Card>
   );
+
+  return CardComponent;
 };
 
 export default RecipeCard;
