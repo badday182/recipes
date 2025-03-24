@@ -13,8 +13,7 @@ import axios from "axios";
 const RecipesList = () => {
   const { items, loading, error } = useAppSelector((state) => state.recipes);
   const [categories, setCategories] = useState<string[]>([]);
-  const [selectedCategory, setSelectedCategory] =
-    useState<string>("All categories");
+  const [selectedCategory, setSelectedCategory] = useState<string>("");
   const [filteredItems, setFilteredItems] = useState(items);
 
   // Fetch categories when component mounts
@@ -40,7 +39,7 @@ const RecipesList = () => {
 
   // Filter recipes when category changes
   useEffect(() => {
-    if (!selectedCategory) {
+    if (!selectedCategory || selectedCategory === "All categories") {
       setFilteredItems(items);
       return;
     }
@@ -70,7 +69,8 @@ const RecipesList = () => {
   }
 
   return (
-    <div className="w-full">
+    // <div className="w-full min-h-screen">
+    <div className="min-w-screen min-h-screen">
       <div className="mb-6 max-w-xs">
         <Select onValueChange={setSelectedCategory} value={selectedCategory}>
           <SelectTrigger>
