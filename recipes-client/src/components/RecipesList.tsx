@@ -83,7 +83,7 @@ const RecipesList = () => {
 
   return (
     <>
-      <div className="mb-6 min-w-screen flex gap-2">
+      <div className="mb-6 w-full flex gap-2">
         <Select onValueChange={setSelectedCategory} value={selectedCategory}>
           <SelectTrigger>
             <SelectValue placeholder="Filter by category" />
@@ -107,7 +107,7 @@ const RecipesList = () => {
         />
       </div>
 
-      <div className="container min-h-screen">
+      <div className="container">
         {totalItems === 0 ? (
           <div className="text-center py-10">
             No recipes found matching your search.
