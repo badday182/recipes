@@ -7,7 +7,7 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 
-const RecipeCardError = () => {
+const RecipeCardError = ({ error }: { error: string }) => {
   return (
     <div className="container mx-auto p-4">
       <Card className="max-w-2xl mx-auto min-w-xs">
