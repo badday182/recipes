@@ -15,7 +15,7 @@ import { RecipeCardProps } from "@/types";
 import { DefaultRecipe } from "@/constants";
 import RecipeCardError from "@/error/recipeCardError";
 
-const RecipeCard = ({ recipeId }: RecipeCardProps) => {
+const RecipeCard = ({ recipeId, isCardinRecipesList }: RecipeCardProps) => {
   const [recipe, setRecipe] = useState(DefaultRecipe);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
@@ -112,52 +112,58 @@ const RecipeCard = ({ recipeId }: RecipeCardProps) => {
             ))}
           </div>
         </CardHeader>
-        <CardContent>
-          {loading ? (
-            <div className="flex justify-center py-8">
-              <div className="animate-pulse text-center">
-                <p>Loading recipe details...</p>
-              </div>
-            </div>
-          ) : (
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-              <div>
-                <h3 className="text-lg font-medium mb-2">Ingredients</h3>
-                <ul className="list-disc pl-5 space-y-1">
-                  {ingredients.map((item, idx) => (
-                    <li key={idx}>
-                      {item.measure} {item.name}
-                    </li>
-                  ))}
-                </ul>
-              </div>
+        {!isCardinRecipesList && (
+          <>
+            <CardContent>
+              {loading ? (
+                <div className="flex justify-center py-8">
+                  <div className="animate-pulse text-center">
+                    <p>Loading recipe details...</p>
+                  </div>
+                </div>
+              ) : (
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                  <div>
+                    <h3 className="text-lg font-medium mb-2">Ingredients</h3>
+                    <ul className="list-disc pl-5 space-y-1">
+                      {ingredients.map((item, idx) => (
+                        <li key={idx}>
+                          {item.measure} {item.name}
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
 
-              <div>
-                <h3 className="text-lg font-medium mb-2">Instructions</h3>
-                <ScrollArea className="h-50 rounded-md border p-2">
-                  <p className="text-sm">{meal.strInstructions}</p>
-                </ScrollArea>
-              </div>
-            </div>
-          )}
-        </CardContent>
+                  <div>
+                    <h3 className="text-lg font-medium mb-2">Instructions</h3>
+                    <ScrollArea className="h-50 rounded-md border p-2">
+                      <p className="text-sm">{meal.strInstructions}</p>
+                    </ScrollArea>
+                  </div>
+                </div>
+              )}
+            </CardContent>
 
-        <CardFooter className="flex justify-between">
-          <div className="text-sm text-muted-foreground">ID: {meal.idMeal}</div>
-          {meal.strYoutube && (
-            <Button variant="outline" size="sm" asChild>
-              <a
-                href={meal.strYoutube}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="flex items-center gap-1"
-              >
-                <ExternalLink size={14} />
-                Watch Video
-              </a>
-            </Button>
-          )}
-        </CardFooter>
+            <CardFooter className="flex justify-between">
+              <div className="text-sm text-muted-foreground">
+                ID: {meal.idMeal}
+              </div>
+              {meal.strYoutube && (
+                <Button variant="outline" size="sm" asChild>
+                  <a
+                    href={meal.strYoutube}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="flex items-center gap-1"
+                  >
+                    <ExternalLink size={14} />
+                    Watch Video
+                  </a>
+                </Button>
+              )}
+            </CardFooter>
+          </>
+        )}
       </Card>
     </div>
   );
